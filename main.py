@@ -439,3 +439,28 @@ add_order_position(order_id,1,2)
 
 # Запуск бота
 bot.polling(none_stop=True)
+
+
+def modify_order_position(order_position_id, action):
+    conn = sqlite3.connect('zero_order_service.db')
+    cursor = conn.cursor()
+    if action == 'change':
+        new_quantity = input("Введите новое количество: ")
+def change_order_position(order_position_id, new_quantity=None):
+    conn = sqlite3.connect('zero_order_service.db')
+    cursor = conn.cursor()
+
+    if new_quantity is not None:  # Если передано новое количество, обновляем его
+        cursor.execute('''
+            UPDATE order_positions
+            SET count = ?
+            WHERE id = ?
+        ''', (new_quantity, order_position_id))
+    else:  # Если новое количество не передано, удаляем позицию
+        cursor.execute('''
+            DELETE FROM order_positions
+            WHERE id = ?
+        ''', (order_position_id,))
+
+    conn.commit()
+    conn.close()
