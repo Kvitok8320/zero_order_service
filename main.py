@@ -365,4 +365,3 @@ address = 'tyumen'
 order_id = add_order(user_name)
 
 add_order_position(order_id,1,2)
-
